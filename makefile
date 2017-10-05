@@ -1,25 +1,20 @@
-INC_DIR = include
+all: hw2
 
-all: utSort
-
-utSort: main.o Shapes.o Media.o Sort.o
+hw2: mainTerm.o
 ifeq (${OS}, Windows_NT)
-	g++ -o hw1 main.o Shapes.o Media.o Sort.o -lgtest
+	g++ -o hw2 mainTerm.o -lgtest
 else
-	g++ -o hw1 main.o Shapes.o Media.o Sort.o -lgtest -lpthread
+	g++ -o hw2 mainTerm.o -lgtest -lpthread
 endif
-	
-main.o: main.cpp utSort.h $(INC_DIR)/Sort.h
-	g++ -std=gnu++0x -c main.cpp
-Shapes.o: $(INC_DIR)/Shapes.h Shapes.cpp
-	g++ -std=gnu++0x -c Shapes.cpp
-Media.o: $(INC_DIR)/Media.h Media.cpp
-	g++ -std=gnu++0x -c Media.cpp
-Sort.o: $(INC_DIR)/Sort.h Sort.cpp
-	g++ -std=gnu++0x -c Sort.cpp
-clean:	
+
+mainTerm.o: mainTerm.cpp utTerm.h term.h atom.h variable.h number.h
+	g++ -std=gnu++0x -c mainTerm.cpp
+
+clean:
 ifeq (${OS}, Windows_NT)
 	del *.o *.exe
 else
-	rm -f *.o hw1
+	rm -f *.o *.gch hw2
 endif
+stat:
+	wc *.h *.cpp
