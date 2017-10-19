@@ -2,41 +2,63 @@
 #define VARIABLE_H
 
 #include <string>
+#include <vector>
 #include "term.h"
 #include <iostream>
 using std::string;
+using std::vector;
 
 class Variable : public Term{
 public:
   Variable(string symbol):Term(symbol){ this->SetAssignable(true);}
-  string value(){ return _value; }
-  bool match(Term &term){
+  string value(){
+    vector<Term*>::iterator it;
+    for( it = this->GetEqualRelation()->begin(); it != this->GetEqualRelation()->end(); it++){
+      if((*it)->IsGetStruct())
+      {
+        return (*it)->value();
+      }
+    }
+    return _value;
+  }
+  bool match(Term *term){
     bool isMatch  = false;
     if(this->isAssignable())
     {
-      std::cout << "1";
-      if(isupper(term.symbol().at(0)))        //isVariable
+      if(isupper(term->symbol().at(0)))        //isVariable
       {
-        std::cout << "2";
-        if(!term.isAssignable())              //Variable has value?
+        if(!term->isAssignable())              //Variable has value?
         {
-          std::cout << "3";
-          this->SetValue(term.value());
+          this->SetValue(term->value());
           this->SetAssignable(false);
         }
+        else                                   //Variable match with variable
+        {
+          this->GetEqualRelation()->push_back(this);
+          this->GetEqualRelation()->push_back(term);
+          vector<Term*>::iterator it;
+          for( it =   this->GetEqualRelation()->begin(); it !=   this->GetEqualRelation()->end(); it++){
+            term->GetEqualRelation()->push_back((*it));
+          }
+        }
       }
-      else
+      else                                     //Variable match with atom number struct
       {
-        std::cout << "4";
-        this->SetValue(term.value());
+        this->SetValue(term->value());
         this->SetAssignable(false);
+        this->GetEqualRelation()->push_back(this);
+        this->GetEqualRelation()->push_back(term);
+        vector<Term*>::iterator it;
+        for( it =   this->GetEqualRelation()->begin(); it !=   this->GetEqualRelation()->end(); it++){
+          (*it)->SetValue(term->value());
+          (*it)->SetAssignable(false);
+        }
       }
       isMatch = true;
     }
     else
     {
-      std::cout << "5";
-      if(this->value() == term.value())
+      if(this->value() == term->value())
         isMatch = true;
     }
     return isMatch;
