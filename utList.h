@@ -91,7 +91,7 @@ TEST(List, matchToVarShouldSucceed) {
   Variable Y("Y");
   Atom terence_tao("terence_tao");
   List list({&number1, &X, &terence_tao});
-  Y.match(list);
+  list.match(Y);
   EXPECT_EQ("[496, X, terence_tao]", Y.value());
 }
 

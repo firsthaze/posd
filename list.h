@@ -84,6 +84,10 @@ public:
     }
     else if(term.value() == this->value())
       isMatch = true;
+    else if(term.isAssignable()){
+      isMatch = true;
+      term.SetValue(this->value());
+    }
     else
       isMatch = false;
     return isMatch;
