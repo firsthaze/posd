@@ -79,7 +79,7 @@ TEST(List, matchToStructShouldFail) {
   List list({&number1, &X, &terence_tao});
   vector<Term *> vector1;
   vector1.push_back(&X);
-  Struct s1(Atom("s1"),&vector1);
+  Struct s1(Atom("s1"),vector1);
   ASSERT_FALSE(s1.match(list));
 }
 

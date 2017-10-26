@@ -10,28 +10,28 @@ using std::string;
 class Struct:public Term
 {
 public:
-  Struct(Atom const & name, std::vector<Term *> *args):_name(name), _args(args) { this->_isGetStruct = true;
+  Struct(Atom const & name, std::vector<Term *> args):_name(name), _args(args) { this->_isGetStruct = true;
   }
 
   string value(){
     string ret = _name.symbol() + "(";
-    for(int i = 0; i < _args->size() - 1 ; i++){
-      if(_args->at(i)->value() != "")
-        ret += _args->at(i)->value() + ", ";
+    for(int i = 0; i < _args.size() - 1 ; i++){
+      if(_args.at(i)->value() != "")
+        ret += _args.at(i)->value() + ", ";
       else
-        ret += _args->at(i)->symbol() + ", ";
+        ret += _args.at(i)->symbol() + ", ";
     }
-    if(_args->at(_args->size()-1)->value() != ""){        //is value have string
-        ret += _args->at(_args->size()-1)-> value () + ")";
+    if(_args.at(_args.size()-1)->value() != ""){        //is value have string
+        ret += _args.at(_args.size()-1)-> value () + ")";
     }
     else{
-        ret += _args->at(_args->size()-1)-> symbol () + ")";
+        ret += _args.at(_args.size()-1)-> symbol () + ")";
     }
     return  ret;
   }
 
   Term * args(int index) {
-    return _args->at(index);
+    return _args.at(index);
   }
 
   Atom * name() {
@@ -39,10 +39,10 @@ public:
   }
   string symbol(){
     string ret = _name.symbol() + "(";
-    for(int i = 0; i < _args->size()-1 ; i++){
-      ret += _args->at(i)-> symbol() + ", ";
+    for(int i = 0; i < _args.size()-1 ; i++){
+      ret += _args.at(i)-> symbol() + ", ";
     }
-    ret += _args->at(_args->size()-1)-> symbol() + ")";
+    ret += _args.at(_args.size()-1)-> symbol() + ")";
     return  ret;
   }
 
@@ -51,10 +51,10 @@ public:
       Struct * ps = dynamic_cast<Struct *>(&term);
       if (!this->_name.match(*(ps->name())))
         return false;
-      if(_args->size()!= ps->_args->size())
+      if(_args.size()!= ps->_args.size())
         return false;
-      for(int i=0;i<_args->size();i++){
-        if(_args->at(i)->symbol() != ps->_args->at(i)->symbol())
+      for(int i=0;i<_args.size();i++){
+        if(_args.at(i)->symbol() != ps->_args.at(i)->symbol())
             return false;
       }
       return true;
@@ -63,7 +63,7 @@ public:
   }
 private:
   Atom _name;
-  std::vector<Term *> *_args;
+  std::vector<Term *> _args;
 };
 
 #endif
