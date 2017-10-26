@@ -1,20 +1,20 @@
-all: hw3
+all: hw4
 
-hw3: mainVariable.o
+hw4: mainList.o
 ifeq (${OS}, Windows_NT)
-	g++ -o hw3 mainVariable.o -lgtest
+	g++ -o hw4 mainList.o -lgtest
 else
-	g++ -o hw3 mainVariable.o -lgtest -lpthread
+	g++ -o hw4 mainList.o -lgtest -lpthread
 endif
 
-mainVariable.o: mainVariable.cpp utVariable.h term.h variable.h number.h struct.h atom.h
-	g++ -std=gnu++0x -c mainVariable.cpp
+mainList.o: mainList.cpp utList.h term.h variable.h number.h struct.h atom.h list.h
+	g++ -std=gnu++0x -c mainList.cpp
 
 clean:
 ifeq (${OS}, Windows_NT)
 	del *.o *.exe
 else
-	rm -f *.o *.gch hw3 hw2
+	rm -f *.o *.gch hw4
 endif
 stat:
 	wc *.h *.cpp

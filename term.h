@@ -11,6 +11,7 @@ public:
   Term(string symbol) : _symbol(symbol){}
   vector<Term *> * GetEqualRelation(){ return &_equalRelation;}
   vector<Term *> _equalRelation;
+  virtual vector<Term *> *GetElements(){ return NULL;};
   bool IsGetStruct(){return _isGetStruct;}
   virtual string symbol(){return _symbol;}
   virtual string value() = 0;

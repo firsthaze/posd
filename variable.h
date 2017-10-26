@@ -14,7 +14,7 @@ public:
   string value(){
     vector<Term*>::iterator it;
     for( it = this->GetEqualRelation()->begin(); it != this->GetEqualRelation()->end(); it++){
-      if((*it)->IsGetStruct())
+      if((*it)->IsGetStruct() || (*it)->GetElements())
       {
         return (*it)->value();
       }
@@ -40,6 +40,17 @@ public:
           for( it =   this->GetEqualRelation()->begin(); it !=   this->GetEqualRelation()->end(); it++){
             term->GetEqualRelation()->push_back((*it));
           }
+        }
+      }
+      else if(term->symbol().at(0) == '['){
+        isMatch = true;
+        for(vector<Term*>::iterator it = term->GetElements()->begin(); it != term->GetElements()->end(); it++) {
+          if(this->symbol() == (*it)->symbol())
+            return false;
+        }
+        if(isMatch){
+          this->SetAssignable(false);
+          this->GetEqualRelation()->push_back(term);
         }
       }
       else                                     //Variable match with atom number struct
