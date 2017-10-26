@@ -56,7 +56,7 @@ TEST(List, matchToAtomShouldFail) {
   Variable X("X");
   Atom terence_tao("terence_tao");
   List list({&number1, &X, &terence_tao});
-  ASSERT_FALSE(list.match(&tom));
+  ASSERT_FALSE(list.match(tom));
 }
 
 // ?- 8128 = [496, X, terence_tao].
@@ -67,7 +67,7 @@ TEST(List, matchToNumberShouldFail) {
   Variable X("X");
   Atom terence_tao("terence_tao");
   List list({&number1, &X, &terence_tao});
-  ASSERT_FALSE(list.match(&number2));
+  ASSERT_FALSE(list.match(number2));
 }
 
 // ?- s(X) = [496, X, terence_tao].
@@ -80,7 +80,7 @@ TEST(List, matchToStructShouldFail) {
   vector<Term *> vector1;
   vector1.push_back(&X);
   Struct s1(Atom("s1"),&vector1);
-  ASSERT_FALSE(s1.match(&list));
+  ASSERT_FALSE(s1.match(list));
 }
 
 // ?- Y = [496, X, terence_tao].
@@ -91,7 +91,7 @@ TEST(List, matchToVarShouldSucceed) {
   Variable Y("Y");
   Atom terence_tao("terence_tao");
   List list({&number1, &X, &terence_tao});
-  Y.match(&list);
+  Y.match(list);
   EXPECT_EQ("[496, X, terence_tao]", Y.value());
 }
 
@@ -102,7 +102,7 @@ TEST(List, matchToVarOccuredInListShouldFail) {
   Variable X("X");
   Atom terence_tao("terence_tao");
   List list({&number1, &X, &terence_tao});
-  ASSERT_FALSE(X.match(&list));
+  ASSERT_FALSE(X.match(list));
 }
 
 // ?- [496, X, terence_tao] = [496, X, terence_tao].
@@ -113,7 +113,7 @@ TEST(List, matchToSameListShouldSucceed) {
   Atom terence_tao("terence_tao");
   List list1({&number1, &X, &terence_tao});
   List list2({&number1, &X, &terence_tao});
-  ASSERT_TRUE(list1.match(&list2));
+  ASSERT_TRUE(list1.match(list2));
 }
 
 // ?- [496, X, terence_tao] = [496, Y, terence_tao].
@@ -125,7 +125,7 @@ TEST(List, matchToSameListWithDiffVarNameShouldSucceed) {
   Atom terence_tao("terence_tao");
   List list1({&number1, &X, &terence_tao});
   List list2({&number1, &Y, &terence_tao});
-  ASSERT_TRUE(list1.match(&list2));
+  ASSERT_TRUE(list1.match(list2));
 }
 
 // ?- [496, X, terence_tao] = [496, 8128, terence_tao].
@@ -137,7 +137,7 @@ TEST(List, matchToVarToAtominListShouldSucceed) {
   Atom terence_tao("terence_tao");
   List list1({&number1, &X, &terence_tao});
   List list2({&number1, &number2, &terence_tao});
-  list1.match(&list2);
+  list1.match(list2);
   EXPECT_EQ("8128", X.value());
 }
 
@@ -151,8 +151,8 @@ TEST(List, matchVarinListToAtomShouldSucceed) {
   Atom terence_tao("terence_tao");
   Atom alan_mathison_turing("alan_mathison_turing");
   List list1({&number1, &X, &terence_tao});
-  Y.match(&list1);
-  X.match(&alan_mathison_turing);
+  Y.match(list1);
+  X.match(alan_mathison_turing);
   EXPECT_EQ("[496, alan_mathison_turing, terence_tao]", list1.value());
   EXPECT_EQ("alan_mathison_turing", X.value());
 }

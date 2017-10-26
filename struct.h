@@ -46,10 +46,10 @@ public:
     return  ret;
   }
 
-  bool match(Term *term){
-    if (term->IsGetStruct()){
-      Struct * ps = dynamic_cast<Struct *>(term);
-      if (!this->_name.match(ps->name()))
+  bool match(Term &term){
+    if (term.IsGetStruct()){
+      Struct * ps = dynamic_cast<Struct *>(&term);
+      if (!this->_name.match(*(ps->name())))
         return false;
       if(_args->size()!= ps->_args->size())
         return false;

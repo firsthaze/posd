@@ -66,11 +66,11 @@ public:
     }
     return  ret;
   }
-  bool match(Term * term){
+  bool match(Term & term){
     bool isMatch = true;
-    if(term->GetElements()){
+    if(term.GetElements()){
       int i =0;
-      for(vector<Term*>::iterator it = term->GetElements()->begin(); it != term->GetElements()->end(); it++){
+      for(vector<Term*>::iterator it = term.GetElements()->begin(); it != term.GetElements()->end(); it++){
         if((*it)->value() != this->_elements.at(i)->value()){
           if((*it)->isAssignable())
             (*it)->SetValue(this->_elements.at(i)->value());
@@ -82,7 +82,7 @@ public:
         i++;
       }
     }
-    else if(term->value() == this->value())
+    else if(term.value() == this->value())
       isMatch = true;
     else
       isMatch = false;

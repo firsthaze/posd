@@ -15,18 +15,18 @@ class Number : public Term{
 public:
   Number(double number):Term(double_to_string(number)){}
   string value(){ return this->symbol();}
-  bool match(Term *term){
+  bool match(Term &term){
     bool isMatch  = false;
-    if(isdigit(term->symbol().at(0))){         //isNumber
-      isMatch = this->value().compare(term->value());
+    if(isdigit(term.symbol().at(0))){         //isNumber
+      isMatch = this->value().compare(term.value());
     }
     else
     {
-      if(isupper(term->symbol().at(0)))        //isVariable
+      if(isupper(term.symbol().at(0)))        //isVariable
       {
-        if(term->isAssignable()){
-           term->SetValue(this->value());
-           term->SetAssignable(false);
+        if(term.isAssignable()){
+           term.SetValue(this->value());
+           term.SetAssignable(false);
            isMatch = true;
         }
       }
