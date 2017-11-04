@@ -56,11 +56,11 @@ TEST_F(ParserTest, createTerms)
 // When parser parses all terms via scanner.
 // Then it should return two terms, one is "12345", another is "tom".
 TEST_F(ParserTest, listOfTermsTwo) {
-  /*Scanner scanner("12345, tom");
+  Scanner scanner("12345, tom");
   Parser parser(scanner);
   vector<Term*> terms = parser.getArgs();
   ASSERT_EQ("12345", terms[0]->symbol());
-  ASSERT_EQ("0", terms[1]->symbol());*/
+  ASSERT_EQ("tom", terms[1]->symbol());
 }
 
 
@@ -71,7 +71,7 @@ TEST_F(ParserTest, listOfTermsTwo) {
 TEST_F(ParserTest, parseStructOfStruct) {
   Scanner scanner("point(1, X, z(1,2,3))");
   Parser parser(scanner);
-    ASSERT_EQ("point(1, X, z(1, 2, 3))", parser.createTerm()->symbol());
+  ASSERT_EQ("point(1, X, z(1, 2, 3))", parser.createTerm()->symbol());
 }
 
 

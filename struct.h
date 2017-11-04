@@ -29,7 +29,9 @@ public:
     }
     return  ret;
   }
-
+  int arity() {
+    return _args.size();
+  }
   Term * args(int index) {
     return _args.at(index);
   }
