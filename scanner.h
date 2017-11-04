@@ -33,6 +33,8 @@ public:
         processToken<VAR>(s);
         return VAR;
       } else if (currentChar() == '['){
+        string s = extractList();
+        std::cout << "extractList is :" << s;
         return LIST;
       }else {
         _tokenValue = NONE;
@@ -62,7 +64,10 @@ public:
 
   string extractAtom() {
     int posBegin = position();
+    std::cout << "posBegin is :" << posBegin << "---";
     for (;isalnum(buffer[pos]); ++pos);
+    std::cout << "pos is :" << pos << "---";
+    std::cout << "now position is : " << position();
     return buffer.substr(posBegin, pos-posBegin);
   }
 
@@ -75,6 +80,16 @@ public:
   string extractVar() {
     int posBegin = position();
     for (;isalnum(buffer[pos]) || buffer[pos] == '_'; ++pos);
+    return buffer.substr(posBegin, pos-posBegin);
+  }
+
+  string extractList() {
+    int posBegin = position();
+    std::cout << "posBegin is :" << posBegin << "---";
+    pos = posBegin+1;
+    for (;isalnum(buffer[pos]); ++pos);
+    std::cout << "pos is :" << pos << "---";
+    std::cout << "now position is : " << position();
     return buffer.substr(posBegin, pos-posBegin);
   }
 

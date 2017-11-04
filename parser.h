@@ -21,15 +21,23 @@ public:
     }else if(token == NUMBER){
       return new Number(_scanner.tokenValue());
     }else if(token == ATOM){
-        Atom* atom = new Atom(symtable[_scanner.tokenValue()].first);
-        if(_scanner.currentChar() == '(' ) {
-          _scanner.nextToken() ;
-          vector<Term*> terms = getArgs();
-          if(_currentToken == ')')
-            return new Struct(*atom, terms);
-        }
-        else
-          return atom;
+      Atom* atom = new Atom(symtable[_scanner.tokenValue()].first);
+      if(_scanner.currentChar() == '(' ) {
+        _scanner.nextToken() ;
+        vector<Term*> terms = getArgs();
+        if(_currentToken == ')')
+          return new Struct(*atom, terms);
+      }
+      else
+        return atom;
+    }else if(token == LIST){
+      vector<Term*> terms = getArgs();
+      if(terms.size() == 0){
+        List *list = new List;
+        return list;
+      }else{
+        return new List(terms);
+      }
     }
     return nullptr;
   }
