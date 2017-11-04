@@ -32,7 +32,9 @@ public:
         string s = extractVar();
         processToken<VAR>(s);
         return VAR;
-      } else {
+      } else if (currentChar().compare("[")){
+        return LIST;
+      }else {
         _tokenValue = NONE;
         return extractChar();
       }

@@ -9,6 +9,7 @@ using std::string;
 #include "global.h"
 #include "scanner.h"
 #include "struct.h"
+#include "list.h"
 
 class Parser{
 public:
