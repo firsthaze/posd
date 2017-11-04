@@ -117,7 +117,10 @@ TEST_F(ParserTest, parseListEmpty) {
 // Then it should return a Variable.
 // And #symbol() of Variable should return "_date".
 TEST_F(ParserTest, parseVar) {
-
+  Scanner scanner("_date");
+  Parser parser(scanner);
+  vector<Term*> terms = parser.getArgs();
+  ASSERT_EQ("_date", terms.at(0)->symbol());
 }
 
 
@@ -125,7 +128,9 @@ TEST_F(ParserTest, parseVar) {
 // When parser parses all terms via scanner.
 // Then it should return nothing.
 TEST_F(ParserTest, listOfTermsEmpty) {
-
+  Scanner scanner("");
+  Parser parser(scanner);
+  ASSERT_EQ(nullptr, parser.createTerm());
 }
 
 
@@ -134,7 +139,10 @@ TEST_F(ParserTest, listOfTermsEmpty) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "s(s(s(s(1))))".
 TEST_F(ParserTest, parseStructOfStructAllTheWay) {
-
+  Scanner scanner("s(s(s(s(1))))");
+  Parser parser(scanner);
+  vector<Term*> terms = parser.getArgs();
+  ASSERT_EQ("s(s(s(s(1))))", terms.at(0)->symbol());
 }
 
 
@@ -143,7 +151,11 @@ TEST_F(ParserTest, parseStructOfStructAllTheWay) {
 // Then it should return a List.
 // And #symbol() of List should return "[[1], []]".
 TEST_F(ParserTest, parseListOfLists) {
-
+  //---------------012345678901234
+  Scanner scanner("   [  [1], [] ]");
+  Parser parser(scanner);
+  vector<Term*> terms = parser.getArgs();
+  ASSERT_EQ("[[1], []]", terms.at(0)->symbol());
 }
 
 

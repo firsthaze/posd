@@ -64,10 +64,7 @@ public:
 
   string extractAtom() {
     int posBegin = position();
-    std::cout << "posBegin is :" << posBegin << "---";
     for (;isalnum(buffer[pos]); ++pos);
-    std::cout << "pos is :" << pos << "---";
-    std::cout << "now position is : " << position();
     return buffer.substr(posBegin, pos-posBegin);
   }
 
@@ -86,9 +83,9 @@ public:
   string extractList() {
     int posBegin = position();
     std::cout << "posBegin is :" << posBegin << "---";
-    pos = posBegin+1;
     for (;isalnum(buffer[pos]); ++pos);
     std::cout << "pos is :" << pos << "---";
+    pos++;
     std::cout << "now position is : " << position();
     return buffer.substr(posBegin, pos-posBegin);
   }
