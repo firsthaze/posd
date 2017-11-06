@@ -105,6 +105,7 @@ TEST_F(ParserTest, parseStructThreeArgs) {
 // Then it should return a List.
 // And #symbol() of List should return "[]".
 TEST_F(ParserTest, parseListEmpty) {
+  //---------------01234567
   Scanner scanner("   [   ]");
   Parser parser(scanner);
   vector<Term*> terms = parser.getArgs();
@@ -139,7 +140,7 @@ TEST_F(ParserTest, listOfTermsEmpty) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "s(s(s(s(1))))".
 TEST_F(ParserTest, parseStructOfStructAllTheWay) {
-  Scanner scanner("s(s(s(s(1))))");
+  Scanner scanner("  s( s(s(s(1))))");
   Parser parser(scanner);
   vector<Term*> terms = parser.getArgs();
   ASSERT_EQ("s(s(s(s(1))))", terms.at(0)->symbol());
@@ -164,7 +165,11 @@ TEST_F(ParserTest, parseListOfLists) {
 // Then it should return a List.
 // And #symbol() of List should return "[[1], [], s(s(1))]".
 TEST_F(ParserTest, parseListOfListsAndStruct) {
-
+  //---------------012345678901234567890123456
+  Scanner scanner("   [  [1], [], s(s(1)) ]   ");
+  Parser parser(scanner);
+  vector<Term*> terms = parser.getArgs();
+  ASSERT_EQ("[[1], [], s(s(1))]", terms.at(0)->symbol());
 }
 
 // Given there is string: "   [1, 2]" in scanner.
@@ -172,7 +177,6 @@ TEST_F(ParserTest, parseListOfListsAndStruct) {
 // Then it should return a List.
 // And #symbol() of List should return "[1, 2]".
 TEST_F(ParserTest, parseList) {
-
 }
 
 // Given there is string: "[1,2)" in scanner.

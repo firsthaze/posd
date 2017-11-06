@@ -18,9 +18,11 @@ public:
       if (skipLeadingWhiteSpace() >= buffer.length())
         return EOS;
       else if (isdigit(currentChar())) {
+          std::cout << "into create Number --";
         _tokenValue = extractNumber();
         return NUMBER;
       }  else if (islower(currentChar())) {
+        std::cout << "into create Atom --";
         string s = extractAtom();
         processToken<ATOM>(s);
         return ATOM;
@@ -33,8 +35,8 @@ public:
         processToken<VAR>(s);
         return VAR;
       } else if (currentChar() == '['){
-        string s = extractList();
-        std::cout << "extractList is :" << s;
+        std::cout << "into create List --";
+        ++pos;
         return LIST;
       }else {
         _tokenValue = NONE;
@@ -45,7 +47,7 @@ public:
   int tokenValue() const {return _tokenValue;}
 
   int skipLeadingWhiteSpace() {
-    for (; (buffer[pos] == ' ' || buffer[pos] == '\t') && pos<buffer.length(); ++pos);
+    for (; (buffer[pos] == ' ' || buffer[pos] == '\t') && pos<buffer.length(); pos++);
     return position();
   }
 
@@ -82,11 +84,8 @@ public:
 
   string extractList() {
     int posBegin = position();
-    std::cout << "posBegin is :" << posBegin << "---";
-    for (;isalnum(buffer[pos]); ++pos);
-    std::cout << "pos is :" << pos << "---";
-    pos++;
-    std::cout << "now position is : " << position();
+    if(buffer[pos] == '[')
+      pos++;
     return buffer.substr(posBegin, pos-posBegin);
   }
 

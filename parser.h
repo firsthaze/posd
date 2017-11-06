@@ -31,24 +31,30 @@ public:
       else
         return atom;
     }else if(token == LIST){
-      vector<Term*> terms = getArgs();
-      if(terms.size() == 0){
-        List *list = new List;
-        return list;
-      }else{
-        return new List(terms);
-      }
+        if(_scanner.currentChar() == ']')
+        {
+          std::cout << "end of list --";
+          List *list = new List;
+          _scanner.nextToken();
+          return list;
+        }
+          vector<Term*> terms = getArgs();
+          return new List(terms);
     }
     return nullptr;
   }
 
   vector<Term*> getArgs()
   {
+    //std::cout << "into getArgs --";
     Term* term = createTerm();
     vector<Term*> args;
-    if(term)
+    if(term){
+      std::cout << "term is created --";
       args.push_back(term);
-    while((_currentToken = _scanner.nextToken()) == ',') {
+    }
+    while((_currentToken = _scanner.nextToken()) == ',' || _scanner.currentChar() == ']') {
+      std::cout << "into while --";
       args.push_back(createTerm());
     }
     return args;
