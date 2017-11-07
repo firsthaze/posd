@@ -177,6 +177,10 @@ TEST_F(ParserTest, parseListOfListsAndStruct) {
 // Then it should return a List.
 // And #symbol() of List should return "[1, 2]".
 TEST_F(ParserTest, parseList) {
+  Scanner scanner("   [1, 2]");
+  Parser parser(scanner);
+  vector<Term*> terms = parser.getArgs();
+  ASSERT_EQ("[1, 2]", terms.at(0)->symbol());
 }
 
 // Given there is string: "[1,2)" in scanner.
