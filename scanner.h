@@ -15,6 +15,7 @@ public:
   void setInput(string in) {buffer = in;}
 
   int nextToken() {
+    std::cout <<"now currentChar is :" << currentChar() << "--";
       if (skipLeadingWhiteSpace() >= buffer.length())
         return EOS;
       else if (isdigit(currentChar())) {

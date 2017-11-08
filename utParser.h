@@ -187,7 +187,12 @@ TEST_F(ParserTest, parseList) {
 // When parser parses all terms via scanner.
 // Then it should return a string: "unexpected token" as exception.
 TEST_F(ParserTest, illegal1) {
-
+  Scanner scanner("[1,2)");
+  Parser parser(scanner);
+  vector<Term*>  terms;
+  string S;
+  try{terms = parser.getArgs();}catch(string s){S = s;}
+  EXPECT_EQ("unexpected token", S);
 }
 
 // Given there is string: ".(1,[])" in scanner.

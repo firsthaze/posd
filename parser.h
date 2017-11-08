@@ -39,7 +39,11 @@ public:
           return list;
         }
           vector<Term*> terms = getArgs();
-          return new List(terms);
+          if(_currentToken == ')'){
+            std::cout << "into error";
+            throw std::string("unexpected token");
+          }else
+            return new List(terms);
     }
     return nullptr;
   }
