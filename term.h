@@ -19,7 +19,8 @@ public:
   bool isAssignable(){ return _assignable;}
   void SetValue(string value){ _value = value;}
   void SetAssignable(bool assignable){ _assignable = assignable;}
-
+  virtual Term * args(int index) {return nullptr;}
+  virtual int arity() {return 0;}
 protected:
   string const _symbol;
   string _value;

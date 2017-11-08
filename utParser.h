@@ -202,7 +202,13 @@ TEST_F(ParserTest, illegal1) {
 // And #symbol() of Struct should return ".(1, [])".
 // And the first term should be number: "1", the second term should be another List: "[]".
 TEST_F(ParserTest, ListAsStruct) {
-
+  Scanner scanner(".(1,[])");
+  Parser parser(scanner);
+  vector<Term*> terms = parser.getArgs();
+  EXPECT_EQ(2,  terms.at(0)->arity());
+  EXPECT_EQ(".(1, [])",  terms.at(0)->symbol());
+  EXPECT_EQ("1", terms.at(0)->args(0)->symbol());
+  EXPECT_EQ("[]", terms.at(0)->args(1)->symbol());
 }
 
 

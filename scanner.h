@@ -22,7 +22,7 @@ public:
           std::cout << "into create Number --";
         _tokenValue = extractNumber();
         return NUMBER;
-      }  else if (islower(currentChar())) {
+      }  else if (islower(currentChar()) || currentChar() == '.') {
         std::cout << "into create Atom --";
         string s = extractAtom();
         processToken<ATOM>(s);
@@ -67,7 +67,7 @@ public:
 
   string extractAtom() {
     int posBegin = position();
-    for (;isalnum(buffer[pos]); ++pos);
+    for (;isalnum(buffer[pos]) || buffer[pos] == '.'; ++pos);
     return buffer.substr(posBegin, pos-posBegin);
   }
 
