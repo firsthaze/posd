@@ -15,15 +15,12 @@ public:
   void setInput(string in) {buffer = in;}
 
   int nextToken() {
-    std::cout <<"now currentChar is :" << currentChar() << "--";
       if (skipLeadingWhiteSpace() >= buffer.length())
         return EOS;
       else if (isdigit(currentChar())) {
-          std::cout << "into create Number --";
         _tokenValue = extractNumber();
         return NUMBER;
       }  else if (islower(currentChar()) || currentChar() == '.') {
-        std::cout << "into create Atom --";
         string s = extractAtom();
         processToken<ATOM>(s);
         return ATOM;
@@ -36,7 +33,6 @@ public:
         processToken<VAR>(s);
         return VAR;
       } else if (currentChar() == '['){
-        std::cout << "into create List --";
         ++pos;
         return LIST;
       }else {

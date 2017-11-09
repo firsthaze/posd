@@ -40,12 +40,16 @@ public:
     return &_name;
   }
   string symbol(){
-    string ret = _name.symbol() + "(";
-    for(int i = 0; i < _args.size()-1 ; i++){
-      ret += _args.at(i)-> symbol() + ", ";
+    if(_args.size() == 0){
+      return _name.symbol() + "()";
+    }else{
+      string ret = _name.symbol() + "(";
+      for(int i = 0; i < _args.size()-1 ; i++){
+        ret += _args.at(i)-> symbol() + ", ";
+      }
+      ret += _args.at(_args.size()-1)-> symbol() + ")";
+      return  ret;
     }
-    ret += _args.at(_args.size()-1)-> symbol() + ")";
-    return  ret;
   }
 
   bool match(Term &term){

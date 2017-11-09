@@ -23,7 +23,11 @@ public:
     }else if(token == ATOM){
       Atom* atom = new Atom(symtable[_scanner.tokenValue()].first);
       if(_scanner.currentChar() == '(' ) {
-        _scanner.nextToken() ;
+        _scanner.nextToken();
+        if(_scanner.currentChar() == ')') {
+          vector<Term *> args;
+          return new Struct(*atom, args);
+        }
         vector<Term*> terms = getArgs();
         if(_currentToken == ')')
           return new Struct(*atom, terms);
@@ -33,14 +37,12 @@ public:
     }else if(token == LIST){
         if(_scanner.currentChar() == ']')
         {
-          std::cout << "end of list --";
           List *list = new List;
           _scanner.nextToken();
           return list;
         }
           vector<Term*> terms = getArgs();
           if(_currentToken == ')'){
-            std::cout << "into error";
             throw std::string("unexpected token");
           }else
             return new List(terms);
@@ -54,11 +56,9 @@ public:
     Term* term = createTerm();
     vector<Term*> args;
     if(term){
-      std::cout << "term is created --";
       args.push_back(term);
     }
     while((_currentToken = _scanner.nextToken()) == ',' || _scanner.currentChar() == ']') {
-      std::cout << "into while --";
       args.push_back(createTerm());
     }
     return args;
