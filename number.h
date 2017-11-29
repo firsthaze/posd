@@ -15,24 +15,27 @@ class Number : public Term{
 public:
   Number(double number):Term(double_to_string(number)){}
   string value(){ return this->symbol();}
+  
   bool match(Term &term){
     bool isMatch  = false;
     if(isdigit(term.symbol().at(0))){         //isNumber
-      isMatch = this->value().compare(term.value());
+      if(term.symbol() == this->symbol())
+        isMatch = true;
     }
     else
     {
       if(isupper(term.symbol().at(0)))        //isVariable
       {
-        if(term.isAssignable()){
-           term.SetValue(this->value());
-           term.SetAssignable(false);
-           isMatch = true;
-        }
+        return term.match(*this);
+        // if(term.isAssignable()){
+        //    term.SetValue(this->value());
+        //    term.SetAssignable(false);
+        //    isMatch = true;
+        // }
       }
       //isAtom = false
-      return isMatch;
     }
+    return isMatch;
   }
 
 private:

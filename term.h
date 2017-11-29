@@ -14,7 +14,7 @@ public:
   virtual vector<Term *> *GetElements(){ return NULL;};
   bool IsGetStruct(){return _isGetStruct;}
   virtual string symbol(){return _symbol;}
-  virtual string value() = 0;
+  virtual string value(){return _symbol;}// =0
   virtual bool match(Term &term) = 0;
   bool isAssignable(){ return _assignable;}
   void SetValue(string value){ _value = value;}

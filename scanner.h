@@ -20,7 +20,7 @@ public:
       else if (isdigit(currentChar())) {
         _tokenValue = extractNumber();
         return NUMBER;
-      }  else if (islower(currentChar()) || currentChar() == '.') {
+      }  else if (islower(currentChar())) {
         string s = extractAtom();
         processToken<ATOM>(s);
         return ATOM;

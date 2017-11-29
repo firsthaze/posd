@@ -8,7 +8,7 @@ using std::vector;
 
 class List : public Term {
 public:
-  List (): Term("[]"), _elements() {}
+  List (): Term("[]"), _elements(0) {}
   List (vector<Term *> const & elements):_elements(elements){}
   vector<Term *> *GetElements(){ return &_elements;}
   Term * head(){

@@ -8,72 +8,30 @@
 using std::string;
 using std::vector;
 
-class Variable : public Term{
+class Variable : public Term {
 public:
-  Variable(string symbol):Term(symbol){ this->SetAssignable(true);}
-  string value(){
-    vector<Term*>::iterator it;
-    for( it = this->GetEqualRelation()->begin(); it != this->GetEqualRelation()->end(); it++){
-      if((*it)->IsGetStruct() || (*it)->GetElements())
-      {
-        return (*it)->value();
-      }
+  Variable(string s):Term(s), _inst(0){}
+  string value() {
+    if (_inst){
+      std::cout << "call real val" << '\n';
+      return _inst->value();
     }
-    return _value;
+    else{
+      std::cout << "call symbol" << '\n';
+      return Term::value();
+    }
   }
-  bool match(Term &term){
-    bool isMatch  = false;
-    if(this->isAssignable())
-    {
-      if(isupper(term.symbol().at(0)))        //isVariable
-      {
-        if(!term.isAssignable())              //Variable has value?
-        {
-          this->SetValue(term.value());
-          this->SetAssignable(false);
-        }
-        else                                   //Variable match with variable
-        {
-          this->GetEqualRelation()->push_back(this);
-          this->GetEqualRelation()->push_back(&term);
-          vector<Term*>::iterator it;
-          for( it =   this->GetEqualRelation()->begin(); it !=   this->GetEqualRelation()->end(); it++){
-            term.GetEqualRelation()->push_back((*it));
-          }
-        }
-      }
-      else if(term.symbol().at(0) == '['){
-        isMatch = true;
-        for(vector<Term*>::iterator it = term.GetElements()->begin(); it != term.GetElements()->end(); it++) {
-          if(this->symbol() == (*it)->symbol())
-            return false;
-        }
-        if(isMatch){
-          this->SetAssignable(false);
-          this->GetEqualRelation()->push_back(&term);
-        }
-      }
-      else                                     //Variable match with atom number struct
-      {
-        this->SetValue(term.value());
-        this->SetAssignable(false);
-        this->GetEqualRelation()->push_back(this);
-        this->GetEqualRelation()->push_back(&term);
-        vector<Term*>::iterator it;
-        for( it =   this->GetEqualRelation()->begin(); it !=   this->GetEqualRelation()->end(); it++){
-          (*it)->SetValue(term.value());
-          (*it)->SetAssignable(false);
-        }
-      }
-      isMatch = true;
+  bool match( Term & term ){
+    if (this == &term)
+      return true;
+    if(!_inst){
+      _inst = &term ;
+      return true;
     }
-    else
-    {
-      if(this->value() == term.value())
-        isMatch = true;
-    }
-    return isMatch;
+    return _inst->match(term);
   }
+private:
+  Term * _inst;
 };
 
 #endif

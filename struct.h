@@ -13,22 +13,16 @@ public:
   Struct(Atom const & name, std::vector<Term *> args):_name(name), _args(args) { this->_isGetStruct = true;
   }
 
-  string value(){
+  string value() {
+    //std::cout << "into struct value()" << '\n';
     string ret = _name.symbol() + "(";
-    for(int i = 0; i < _args.size() - 1 ; i++){
-      if(_args.at(i)->value() != "")
-        ret += _args.at(i)->value() + ", ";
-      else
-        ret += _args.at(i)->symbol() + ", ";
-    }
-    if(_args.at(_args.size()-1)->value() != ""){        //is value have string
-        ret += _args.at(_args.size()-1)-> value () + ")";
-    }
-    else{
-        ret += _args.at(_args.size()-1)-> symbol () + ")";
-    }
-    return  ret;
+    std::vector<Term *>::iterator it = _args.begin();
+    for (; it != _args.end()-1; ++it)
+      ret += (*it)->value()+", ";
+    ret  += (*it)->value()+")";
+    return ret;
   }
+
   int arity() {
     return _args.size();
   }
