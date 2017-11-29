@@ -13,11 +13,9 @@ public:
   Variable(string s):Term(s), _inst(0){}
   string value() {
     if (_inst){
-      std::cout << "call real val" << '\n';
       return _inst->value();
     }
     else{
-      std::cout << "call symbol" << '\n';
       return Term::value();
     }
   }

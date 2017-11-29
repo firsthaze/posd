@@ -164,13 +164,10 @@ public:
     }
     nodes.clear();
     nodes = tempNodes;
-    //std::reverse(nodes.begin(),nodes.end());   //  =1X
   }
 
   void connectNode(){
     stack<Node *> stackForPreOrder;
-    // for(vector<Node*>::iterator it = nodes.begin(); it != nodes.end(); ++it)
-    //   std::cout << (*it)->payload << '\n';
     for(vector<Node*>::iterator it = nodes.begin(); it != nodes.end(); ++it){
       switch ((*it)->payload) {
         case TERM :

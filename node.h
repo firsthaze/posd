@@ -11,12 +11,10 @@ public:
 
   bool evaluate(){
     if(payload == EQUALITY){
-      //std::cout << "left->term->value() :" << left->term->value() << '\n';
       return left->term->match(*(right->term));
     }else if(payload == COMMA){
       bool isLeftTrue = left->evaluate();
       bool isRightTrue = right->evaluate();
-      //std::cout << "left is" << isLeftTrue << "right is" << isRightTrue << '\n';
       return (isLeftTrue && isRightTrue);
     }else if(payload == SEMICOLON){
       bool isLeftTrue = left->evaluate();

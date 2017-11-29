@@ -138,7 +138,6 @@ TEST_F(ParserTest, createTerm_DotStruct){
 }
 
 TEST_F(ParserTest, createTerm_emptyList){
-  std::cout <<"0";
   Scanner scanner("   [   ]");
   Parser parser( scanner );
   ASSERT_EQ( "[]", parser.createTerm()->symbol());
@@ -347,7 +346,6 @@ TEST_F(ParserTest, TwoVariableMatching4) {
   EXPECT_EQ("X", et->left->left->term->symbol());
   EXPECT_EQ("s(Y)", et->left->right->term->symbol());
   EXPECT_EQ("s(Y)", terms[1]->symbol());
-  std::cout << terms[1]->value() << '\n';
   EXPECT_EQ(EQUALITY, et->right->payload);
   EXPECT_EQ("Y", et->right->left->term->symbol());
   EXPECT_EQ("1", et->right->right->term->symbol());
