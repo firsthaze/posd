@@ -3,7 +3,6 @@
 #include "term.h"
 #include <string>
 using std::string;
-
 class Atom : public Term{
 public:
   Atom (string symbol):Term(symbol) {}
@@ -22,7 +21,6 @@ public:
         }
         else
         {
-          std::cout << "this value" <<this->value();
           if(this->value() == term.value())
           {
             isMatch = true;

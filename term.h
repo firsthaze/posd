@@ -5,6 +5,8 @@
 
 using std::string;
 using std::vector;
+template<class T>
+class Iterator;
 class Term{
 public:
   Term(){}
@@ -21,6 +23,7 @@ public:
   void SetAssignable(bool assignable){ _assignable = assignable;}
   virtual Term * args(int index) {return nullptr;}
   virtual int arity() {return 0;}
+  virtual Iterator<Term*>* createIterator();
 protected:
   string const _symbol;
   string _value;

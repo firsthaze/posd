@@ -5,7 +5,8 @@
 
 #include <vector>
 using std::vector;
-
+template <class T>
+class Iterator;
 class List : public Term {
 public:
   List (): Term("[]"), _elements(0) {}
@@ -20,6 +21,13 @@ public:
       return (*it);
     }
   }
+  Term * args(int index) {
+    return _elements[index];
+  }
+  int arity() const {
+    return _elements.size();
+  }
+  Iterator<Term*> * createIterator();
   List * tail(){
     if(_elements.size() == 0){
       throw std::string("Accessing tail in an empty list");

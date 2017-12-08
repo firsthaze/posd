@@ -1,20 +1,26 @@
-all: hw6
+all: hw7
 
-hw6: mainParser.o
+hw7: mainIterator.o
 ifeq (${OS}, Windows_NT)
-	g++ -o hw6 mainParser.o -lgtest
+	g++ -o hw7 mainIterator.o -lgtest
 else
-	g++ -o hw6 mainParser.o -lgtest -lpthread
+	g++ -o hw7 mainIterator.o -lgtest -lpthread
 endif
 
-mainParser.o: mainParser.cpp utParser.h term.h variable.h number.h struct.h atom.h list.h scanner.h parser.h node.h
-	g++ -std=gnu++0x -c mainParser.cpp
+term.o: term.cpp term.h
+	g++ -std=gnu++0x -c term.cpp
+struct.o: struct.cpp struct.h
+	g++ -std=gnu++0x -c struct.cpp
+list.o: list.cpp list.h
+	g++ -std=gnu++0x -c list.cpp
+mainIterator.o: mainIterator.cpp utIterator.h term.o variable.h struct.o number.h atom.h list.o scanner.h parser.h node.h iterator.h
+	g++ -std=gnu++0x -c mainIterator.cpp
 
 clean:
 ifeq (${OS}, Windows_NT)
 	del *.o *.exe
 else
-	rm -f *.o *.gch hw6
+	rm -f *.o *.gch hw7
 endif
 stat:
 	wc *.h *.cpp
