@@ -85,13 +85,18 @@ class DFSIterator :public Iterator<T>{
 public:
   DFSIterator(T termPointer): _index(0), _termPointer(termPointer){}
 
-  void first(){
+  T first(){
     _index = 1;
     DFS(_termPointer);
+    for(vector<Term*>::iterator it = _nodes.begin(); it!= _nodes.end(); ++it){
+      std::cout << "Here is : " << (*it)->symbol() << '\n';
+    }
+    _index = 0;
+    return _nodes.at(_index);
   }
 
   T currentItem() const{
-    return _termPointer->args(_index);
+    return _nodes.at(_index);
   }
 
   bool isDone() const{
@@ -104,16 +109,10 @@ public:
 
 private:
   T DFS( T termPointer){
-    std::cout << "HIHI1" << '\n';
     Iterator<T> * it = termPointer->createIterator();
-    std::cout << "HIHI2" << '\n';
     for(it->first(); !(it->isDone()); it->next()){
-      std::cout << "HIHI3" << '\n';
+      _nodes.push_back(it->currentItem());
       DFS(it->currentItem());
-    }
-    _nodes.push_back(it->currentItem());
-    for(vector<Term*>::iterator it = _nodes.begin(); it!= _nodes.end(); ++it){
-      std::cout << "Here is : " << (*it)->symbol() << '\n';
     }
   }
   int _index;

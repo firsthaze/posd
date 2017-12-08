@@ -93,4 +93,17 @@ TEST(iterator, StructDFS){
   //ASSERT_EQ("1", it->currentItem()->symbol());
 }
 
+TEST(iterator, ListDFS){
+  Number one(1);
+  Variable X("X");
+  Variable Y("Y");
+  Number two(2);
+  Struct t(Atom("t"), { &X, &two });
+  List l({ &one, &t, &Y });
+
+  Iterator<Term*> *it = l.createDFSIterator();
+  it->first();
+  //ASSERT_EQ("1", it->currentItem()->symbol());
+}
+
 #endif
