@@ -28,6 +28,8 @@ public:
     return _elements.size();
   }
   Iterator<Term*> * createIterator();
+  Iterator<Term*> * createDFSIterator();
+  Iterator<Term*> * createBFSIterator();
   List * tail(){
     if(_elements.size() == 0){
       throw std::string("Accessing tail in an empty list");

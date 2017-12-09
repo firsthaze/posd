@@ -46,6 +46,7 @@ public:
   int arity()  {return _args.size();}
   Iterator<Term*> * createIterator();
   Iterator<Term*> * createDFSIterator();
+  Iterator<Term*> * createBFSIterator();
   bool match(Term &term){
     if (typeid(term) ==  typeid(Variable))
       return term.match(*this);

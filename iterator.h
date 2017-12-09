@@ -4,7 +4,9 @@
 #include "struct.h"
 #include "list.h"
 #include <vector>
+#include <queue>
 using std::vector;
+using std::queue;
 template <class T>
 class Iterator {
 public:
@@ -83,16 +85,15 @@ private:
 template <class T>
 class DFSIterator :public Iterator<T>{
 public:
-  DFSIterator(T termPointer): _index(0), _termPointer(termPointer){}
+  DFSIterator(T termPointer): _index(1), _termPointer(termPointer){}
 
-  T first(){
+  void first(){
     _index = 1;
     DFS(_termPointer);
     for(vector<Term*>::iterator it = _nodes.begin(); it!= _nodes.end(); ++it){
       std::cout << "Here is : " << (*it)->symbol() << '\n';
     }
-    _index = 0;
-    return _nodes.at(_index);
+    _index = 0; // 回傳nodes 抓currentIterm用
   }
 
   T currentItem() const{
@@ -100,7 +101,7 @@ public:
   }
 
   bool isDone() const{
-    return _index >= _termPointer->arity();
+    return _index >= _nodes.size();
   }
 
   void next(){
@@ -113,6 +114,51 @@ private:
     for(it->first(); !(it->isDone()); it->next()){
       _nodes.push_back(it->currentItem());
       DFS(it->currentItem());
+    }
+  }
+  int _index;
+  T _termPointer;
+  vector<T> _nodes;
+};
+
+template <class T>
+class BFSIterator :public Iterator<T>{
+public:
+  BFSIterator(T termPointer): _index(1), _termPointer(termPointer){}
+
+  void first(){
+    _index = 1;
+    BFS(_termPointer);
+    for(vector<Term*>::iterator it = _nodes.begin(); it!= _nodes.end(); ++it){
+      std::cout << "Here is : " << (*it)->symbol() << '\n';
+    }
+    _index = 1; // 回傳nodes 抓currentIterm用
+  }
+
+  T currentItem() const{
+    return _nodes.at(_index);
+  }
+
+  bool isDone() const{
+    return _index >= _nodes.size();
+  }
+
+  void next(){
+    _index++;
+  }
+
+private:
+  T BFS( T termPointer){
+    queue<T> queForNotVisit;
+    queForNotVisit.push(termPointer);
+
+    while(!queForNotVisit.empty()){
+      _nodes.push_back(queForNotVisit.front());
+      Iterator<T> * it = queForNotVisit.front()->createIterator();
+      for(it->first();!(it->isDone());it->next()){
+        queForNotVisit.push(it->currentItem());
+      }
+      queForNotVisit.pop();
     }
   }
   int _index;
