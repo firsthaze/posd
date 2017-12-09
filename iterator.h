@@ -90,9 +90,6 @@ public:
   void first(){
     _index = 1;
     DFS(_termPointer);
-    for(vector<Term*>::iterator it = _nodes.begin(); it!= _nodes.end(); ++it){
-      std::cout << "Here is : " << (*it)->symbol() << '\n';
-    }
     _index = 0; // 回傳nodes 抓currentIterm用
   }
 
@@ -129,9 +126,6 @@ public:
   void first(){
     _index = 1;
     BFS(_termPointer);
-    for(vector<Term*>::iterator it = _nodes.begin(); it!= _nodes.end(); ++it){
-      std::cout << "Here is : " << (*it)->symbol() << '\n';
-    }
     _index = 1; // 回傳nodes 抓currentIterm用
   }
 
